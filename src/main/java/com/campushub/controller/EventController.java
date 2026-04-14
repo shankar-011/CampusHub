@@ -47,7 +47,6 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ORGANIZER','ADMIN')")
     @Operation(summary = "Update an event", description = "Only the event owner or ADMIN can update. Available tickets adjust automatically with capacity changes.")
     public EventResponse updateEvent(@PathVariable Long id, @Valid @RequestBody UpdateEventRequest req) {
         Long requesterId = getAuthenticatedUserId();
@@ -55,7 +54,6 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ORGANIZER','ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete an event", description = "Only the event owner or ADMIN can delete")
     public void deleteEvent(@PathVariable Long id) {

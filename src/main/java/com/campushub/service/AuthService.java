@@ -30,6 +30,8 @@ public class AuthService {
     private JwtUtil jwtUtil;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private OtpService otpService;
 
     @Value("${jwt.access-token-expiry}")
     private long accessTokenExpiry;
@@ -37,8 +39,9 @@ public class AuthService {
     @Value("${jwt.refresh-token-expiry}")
     private long refreshTokenExpiry;
 
-
     public UserResponse register(RegisterRequest req) {
+        otpService.verifyOtp(req.email(), req.otp());
+
         if (userRepository.findByEmail(req.email()).isPresent()) {
             throw new ConflictException("Email already registered");
         }
