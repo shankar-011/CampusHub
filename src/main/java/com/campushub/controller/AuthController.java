@@ -28,7 +28,11 @@ public class AuthController {
         this.authService = authService;
         this.otpService = otpService;
     }
-
+    @GetMapping("/status")
+    @ResponseStatus(HttpStatus.OK)
+    public String getHealth(){
+        return "GOOD!!";
+    }
     @PostMapping("/send-otp")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
